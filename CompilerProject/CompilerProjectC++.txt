@@ -1,0 +1,205 @@
+// Example program
+#include <iostream>
+#include <string>
+#include <fstream>
+
+using namespace std;
+
+bool A();
+bool E();
+bool O();
+bool P();
+bool U();
+bool I();
+bool C();
+bool L();
+bool D();
+
+string input, s;
+
+int main()
+{
+    
+    //cout << "Please enter an input string: ";
+    cout << "\n";
+    ifstream infile ("/users/Kubie/Desktop/input.txt");
+    
+//    for (int i = 0; i < 12; i++) {
+//        cin >> input;
+//        s = input;
+//        if (i == 0)
+//        cout << endl;
+//    }
+    
+    
+    while (infile.good()) {
+        
+        getline(infile, input);
+        s = input;
+        
+        if (input.length() == 0)
+            break;
+        
+        if (A() && s[0] == '\0') {
+            cout << "The string \"" << input << "\" is in the language" << endl;
+        }
+        else {
+            cout << "The string \"" << input << "\" is NOT in the language" << endl;
+        }
+
+    }
+
+
+    
+    return 0;
+}
+
+bool A() {
+    
+    if (I()) {
+        if (s[0] == '=') {
+            s = s.substr(1);
+            if (E()) {
+                return true;
+            }
+        }
+    }
+    else if (E()) {
+        return true;
+    }
+    
+    return false;
+    
+}
+
+bool E() {
+    
+    if (P()) {
+        if (O()) {
+            if (P()) {
+                return true;
+            }
+            else
+                return false;
+        }
+        return true;
+    }
+    return false;
+}
+
+bool O() {
+    
+    if (s[0] == '+') {
+        s = s.substr(1);
+        return true;
+    } else if (s[0] == '-') {
+        s = s.substr(1);
+        return true;
+    }  else if (s[0] == '/') {
+        s = s.substr(1);
+        return true;
+    }  else if (s[0] == '*' && s[1] == '*') {
+        s = s.substr(1);
+        s = s.substr(1);
+        return true;
+    } else if (s[0] == '*') {
+        s = s.substr(1);
+        return true;
+    }
+    
+    return false;
+    
+}
+
+bool P() {
+    
+    if (I()) {
+        return true;
+    }
+    else if (L()) {
+        return true;
+    }
+    else if (U()) {
+        if (I()) {
+            return true;
+        }
+        else if (L()) {
+            return true;
+        }
+        else
+            return false;
+    }
+    else if (s[0] == '(') {
+        s = s.substr(1);
+        if (E()) {
+            if (s[0] == ')') {
+                s = s.substr(1);
+                return true;
+            }
+        }
+    }
+    
+    return false;
+    
+}
+
+bool U() {
+    
+    if (s[0] == '+') {
+        s = s.substr(1);
+        return true;
+    }
+    else if (s[0] == '-') {
+        s = s.substr(1);
+        return true;
+    }
+    else if (s[0] == '!') {
+        s = s.substr(1);
+        return true;
+    }
+    
+    return false;
+    
+}
+
+bool I() {
+    
+    if (C()) {
+        if (I()) {
+            return true;
+        }
+        return true;
+    }
+    return false;
+    
+}
+
+bool C() {
+    
+    if (s[0] >= 'a' && s[0] <= 'z') {
+        s = s.substr(1);
+        return true;
+    }
+    return false;
+}
+
+bool L() {
+    
+    if (D()) {
+        if (L()) {
+            return true;
+        }
+        return true;
+    }
+    return false;
+}
+
+bool D() {
+    
+    if (s[0] >= '0' && s[0] <= '9') {
+        s = s.substr(1);
+        return true;
+    }
+    return false;
+    
+}
